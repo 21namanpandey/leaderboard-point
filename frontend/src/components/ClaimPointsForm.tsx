@@ -27,6 +27,9 @@ interface ClaimPointsFormProps {
   onPointsClaimed: (updatedUser: User, newClaim: ClaimHistory) => void;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
+
+
 const ClaimPointsForm: React.FC<ClaimPointsFormProps> = ({ users, onPointsClaimed }) => {
   const [selectedUserId, setSelectedUserId] = useState<string>('');
   const [isClaimingPoints, setIsClaimingPoints] = useState(false);
@@ -45,7 +48,7 @@ const ClaimPointsForm: React.FC<ClaimPointsFormProps> = ({ users, onPointsClaime
     const randomPoints = Math.floor(Math.random() * 10) + 1; 
 
     try {
-      const response = await axios.post(`http://localhost:5000/api/users/claim-points/${selectedUserId}`, { points: randomPoints });
+      const response = await axios.post(`${BACKEND_URL}/api/users/claim-points/${selectedUserId}`, { points: randomPoints });
 
       const updatedUser: User = {
         id: response.data.user._id,

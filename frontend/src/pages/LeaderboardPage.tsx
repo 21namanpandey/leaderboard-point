@@ -25,6 +25,7 @@ interface ClaimHistory {
   timestamp: Date;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
 const LeaderboardPage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [claimHistory, setClaimHistory] = useState<ClaimHistory[]>([]);
@@ -38,7 +39,7 @@ const LeaderboardPage = () => {
         setLoading(true);
         setInitialLoadError(null);
 
-        const usersResponse = await axios.get('http://localhost:5000/api/users');
+        const usersResponse = await axios.get(`${BACKEND_URL}/api/users`);
         const fetchedUsers: User[] = usersResponse.data.map((user: any) => ({
           id: user._id,
           name: user.name,

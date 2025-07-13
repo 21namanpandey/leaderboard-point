@@ -16,6 +16,9 @@ interface AddUserFormProps {
   onUserAdded: (newUser: User) => void;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
+
+
 const AddUserForm: React.FC<AddUserFormProps> = ({ onUserAdded }) => {
   const [newUserName, setNewUserName] = useState('');
 
@@ -30,7 +33,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onUserAdded }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users', { name: newUserName.trim() });
+      const response = await axios.post(`${BACKEND_URL}/api/users`, { name: newUserName.trim() });
       const newUser: User = {
         id: response.data._id,
         name: response.data.name,
